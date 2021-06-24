@@ -1,6 +1,5 @@
 package game.rule;
 
-import game.board.Table;
 import game.board.card.Card;
 import game.player.Player;
 import game.player.PlayerList;
