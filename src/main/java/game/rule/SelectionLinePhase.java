@@ -4,7 +4,7 @@ import game.board.Line;
 
 public class SelectionLinePhase {
 
-	public Line line;
+	private Line line;
 
 	public void select(Line line) {
 		this.line = line;
@@ -13,4 +13,5 @@ public class SelectionLinePhase {
 	public Line getLine() {
 		return line;
 	}
+
 }

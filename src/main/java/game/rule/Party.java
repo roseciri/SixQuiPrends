@@ -1,39 +1,44 @@
 package game.rule;
 
+import exception.NotEnoughtCardException;
 import game.board.Hand;
 import game.board.Table;
 import game.board.card.Card;
 import game.board.card.CardStack;
 import game.player.Player;
 import game.player.PlayerList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Set;
 
 public class Party {
 
+	private static final Logger logger = LoggerFactory.getLogger(Party.class);
+
 	final PlayerList playerList = new PlayerList();
 	final CardStack cardStack = new CardStack();
-	final public Table table;
+	private final Table table;
 
-	public Party() throws Exception {
+	public Party() throws NotEnoughtCardException {
 		cardStack.init();
 		table = new Table(cardStack.getNewCard(4));
 	}
 
-	public void addPlayer(Player p1) throws Exception {
+	public void addPlayer(Player p1) throws NotEnoughtCardException {
 		playerList.addPlayer(p1);
-		Hand hand = new Hand();
-		for (int i = 1; i <= 10; i++) {
+		var hand = new Hand();
+		for (var i = 1; i <= 10; i++) {
 			hand.addCard(cardStack.getNewCard());
 		}
 		p1.setHand(hand);
 	}
 
 	public void play() {
-		for (int i = 1; i <= 10; i++) {
+		for (var i = 1; i <= 10; i++) {
 			new Tour(this).start();
-			System.out.println(playerList.displayScore());
+			logger.atDebug().log(playerList.displayScore());
 		}
 	}
 
@@ -47,7 +52,11 @@ public class Party {
 
 	public Collection<Card> addCard(Player p, Card c) {
 		Set<Card> cards = table.addCard(p, c);
-		System.out.println(table);
+		logger.atDebug().log(table.toString());
 		return cards;
+	}
+
+	public Table getTable() {
+		return table;
 	}
 }

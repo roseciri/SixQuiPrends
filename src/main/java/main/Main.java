@@ -1,6 +1,7 @@
-import game.board.Table;
-import game.rule.Party;
+package main;
+
 import game.player.Player;
+import game.rule.Party;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		var party = new Party();
 		try {
-			logger.debug(party.table.toString());
+			logger.atDebug().log(party.getTable().toString());
 			var p1 = new Player("Georges");
 			party.addPlayer(p1);
 			var p2 = new Player("Lucas");
