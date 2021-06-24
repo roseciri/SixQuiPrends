@@ -11,14 +11,16 @@ import java.util.List;
 
 public class CardStack {
 
-
 	private static final Logger logger = LoggerFactory.getLogger(CardStack.class);
+	private static final int CARDS_NUMBER = 104;
 
-	List<Card> cardList = new ArrayList<>(104);
+
+	List<Card> cardList = new ArrayList<>(CARDS_NUMBER);
 	Iterator<Card> iterator;
 
+
 	public void init() {
-		for (var i = 1; i <= 104; i++) {
+		for (var i = 1; i <= CARDS_NUMBER; i++) {
 			cardList.add(createCards(i));
 		}
 		mix();
@@ -28,12 +30,12 @@ public class CardStack {
 	private void mix() {
 		// Est ce qu'il faudrait pas synchroniser cette partie ? Il ne fuadrait pas essayer de piocher à ce moment !!!
 		List<Card> oldaCrdsList = cardList;
-		cardList = new ArrayList<>(104);
+		cardList = new ArrayList<>(CARDS_NUMBER);
 		oldaCrdsList.forEach(c -> cardList.add(getRandom()% (cardList.size() + 1), c));
 	}
 
 	private int getRandom() {
-		return new SecureRandom().nextInt(104);
+		return new SecureRandom().nextInt(CARDS_NUMBER);
 	}
 
 	private Card createCards(int i) {
