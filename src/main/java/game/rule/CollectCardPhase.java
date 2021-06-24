@@ -1,6 +1,5 @@
 package game.rule;
 
-import game.board.Table;
 import game.board.card.Card;
 import game.player.Player;
 import game.player.PlayerList;
@@ -30,7 +29,7 @@ public class CollectCardPhase  {
 
 	public void start() {
 		Set<Player> players = playerlist.getPlayers();
-		players.stream().forEach(p -> Executors.newSingleThreadExecutor().submit(()-> p.selectCard(this)) );
+		players.forEach(p -> Executors.newSingleThreadExecutor().submit(()-> p.selectCard(this)) );
 	}
 
 	public Map<Player, Card> getPayload() {
@@ -49,7 +48,6 @@ public class CollectCardPhase  {
 	}
 
 	public void playerPlayCard(Player p, Card c) {
-		//TODO pourquoi si j'enlève ce verrou ça ne marche pas, j'ai une vagiue idée mais bon...
 		pauseLock.lock();
 		payload.put(p, c);
 		reactive.signal();

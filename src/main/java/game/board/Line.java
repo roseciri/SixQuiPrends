@@ -33,7 +33,7 @@ public class Line {
 	}
 
 	public Set<Card> getCards(Card c) {
-		Set<Card> result = cards.stream().collect(Collectors.toSet());
+		Set<Card> result = new HashSet<>(cards);
 		cards = new ArrayList<>();
 		addCardToEnd(c);
 		return result;
@@ -42,8 +42,6 @@ public class Line {
 	@Override
 	public String toString() {
 		String values = cards.stream().map(c -> String.valueOf(c.getValue())).collect(Collectors.joining("|"));
-		var builder = new StringBuilder();
-		builder.append("|").append(values).append("|");
-		return builder.toString();
+		return "|" + values + "|";
 	}
 }

@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Card {
 
-	final private int value;
-	final private int cowsSum;
+	 private final int value;
+	 private final int cowsSum;
 
 	public Card(int value, int cowsSum) {
 		this.value = value;
@@ -21,7 +21,7 @@ public class Card {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Card card = (Card) o;
+		var card = (Card) o;
 		return value == card.value;
 	}
 
