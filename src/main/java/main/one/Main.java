@@ -1,6 +1,5 @@
 package main.one;
 
-import exception.NotEnoughtCardException;
 import game.io.IOParty;
 import main.IOUtils;
 import org.slf4j.Logger;
@@ -12,7 +11,7 @@ public class Main {
 
 	private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
-	public static void main(String[] args) throws NotEnoughtCardException {
+	public static void main(String[] args) {
 		logger.atDebug().log("start");
 		IOParty ioParty = new IOPartyEvent();
 		ioParty.createParty();
@@ -24,6 +23,7 @@ public class Main {
 		return IOUtils.read();
 	}
 
+	@SuppressWarnings("squid:S106")
 	public static String ajouterUnJoueurOuJouer() {
 		new PrintStream(System.out).println("Jouer(play) ou Ajouter un joueur (add) ?");
 		return IOUtils.read();

@@ -8,6 +8,7 @@ import game.rule.Party;
 
 public class IOPartyEvent extends IOParty {
 
+	@Override
 	public void createParty()  {
 		new Party(this);
 	}

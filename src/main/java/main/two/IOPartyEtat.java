@@ -5,7 +5,6 @@ import game.io.Action;
 import game.io.AddPlayerOrPlayAction;
 import game.io.GetPlayerAction;
 import game.io.IOParty;
-import main.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +31,7 @@ public class IOPartyEtat extends IOParty {
 			((GetPlayerAction) action).addPlayer(playerName);
 		} else if(action instanceof AddPlayerOrPlayAction) {
 			((AddPlayerOrPlayAction) action).getAddPlayerAction().addPlayer(playerName);
-		} {
+		} else {
 			throw new ActionImpossibleException();
 		}
 	}

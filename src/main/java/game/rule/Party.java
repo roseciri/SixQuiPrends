@@ -44,6 +44,10 @@ public class Party {
 			communicator.needPlayer(this::addPlayer);
 		} else {
 			communicator.addPlayerOrPlay(new AddPlayerOrPlayAction() {
+				/**
+				 * Je pourraisfaire en sorte qu'une seule action soit utilisé
+				 * @return action de jouer
+				 */
 				@Override
 				public PlayAction getPlayAction() {
 					return Party.this::play;
@@ -87,7 +91,4 @@ public class Party {
 		return cards;
 	}
 
-	public Table getTable() {
-		return table;
-	}
 }

@@ -1,20 +1,21 @@
 package main;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class IOUtils {
 
+	private IOUtils() {
+	}
+
 	public static String read() {
-		String tmp = "";
-		char C = '\0';
+		var in = new InputStreamReader(System.in);
+		var br = new BufferedReader(in);
 		try {
-			while ((C = (char) System.in.read()) != '\n') {
-				if (C != '\r') tmp = tmp + C;
-			}
+			return br.readLine();
 		} catch (IOException e) {
-			System.out.println("Erreur de frappe");
-			System.exit(0);
+			return "";
 		}
-		return tmp;
 	}
 }
