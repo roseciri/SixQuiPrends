@@ -6,7 +6,7 @@ import game.io.GetPlayerAction;
 import game.io.IOParty;
 import game.rule.Party;
 
-public class IOPartyEvent extends IOParty {
+public class IOPartyEvent implements IOParty {
 
 	@Override
 	public void createParty()  {

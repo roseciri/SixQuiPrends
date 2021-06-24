@@ -3,14 +3,14 @@ package game.io;
 import exception.NotEnoughtCardException;
 import game.rule.Party;
 
-public abstract class IOParty {
+public interface IOParty {
 
-	public void createParty() {
+	 default void createParty() {
 		new Party(this);
 	}
 
-	public abstract void needPlayer(GetPlayerAction action) throws NotEnoughtCardException;
+	void needPlayer(GetPlayerAction action) throws NotEnoughtCardException;
 
-	public abstract void addPlayerOrPlay(AddPlayerOrPlayAction action) throws NotEnoughtCardException;
+	void addPlayerOrPlay(AddPlayerOrPlayAction action) throws NotEnoughtCardException;
 
 }

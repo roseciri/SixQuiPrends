@@ -8,7 +8,7 @@ import game.io.IOParty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class IOPartyEtat extends IOParty {
+public class IOPartyEtat implements IOParty {
 
 	private static final Logger logger = LoggerFactory.getLogger(IOPartyEtat.class);
 
