@@ -1,10 +1,15 @@
 package game.rule;
 
 import exception.NotEnoughtCardException;
+import exception.TecnicalException;
 import game.board.Hand;
 import game.board.Table;
 import game.board.card.Card;
 import game.board.card.CardStack;
+import game.io.AddPlayerOrPlayAction;
+import game.io.GetPlayerAction;
+import game.io.IOParty;
+import game.io.PlayAction;
 import game.player.Player;
 import game.player.PlayerList;
 import org.slf4j.Logger;
@@ -20,13 +25,39 @@ public class Party {
 	final PlayerList playerList = new PlayerList();
 	final CardStack cardStack = new CardStack();
 	private final Table table;
+	private IOParty communicator;
 
-	public Party() throws NotEnoughtCardException {
+	public Party(IOParty communicator) {
+		this.communicator = communicator;
 		cardStack.init();
-		table = new Table(cardStack.getNewCard(4));
+		try {
+			table = new Table(cardStack.getNewCard(4));
+			communicator.needPlayer(this::addPlayer);
+		} catch (NotEnoughtCardException e) {
+			throw new TecnicalException("La pioche ne devrait pas être vide au lancement");
+		}
 	}
 
-	public void addPlayer(Player p1) throws NotEnoughtCardException {
+	private void addPlayer(String name) throws NotEnoughtCardException {
+		addPlayer(new Player(name));
+		if (playerList.getPlayersNumber() < 2) {
+			communicator.needPlayer(this::addPlayer);
+		} else {
+			communicator.addPlayerOrPlay(new AddPlayerOrPlayAction() {
+				@Override
+				public PlayAction getPlayAction() {
+					return Party.this::play;
+				}
+
+				@Override
+				public GetPlayerAction getAddPlayerAction() {
+					return Party.this::addPlayer;
+				}
+			});
+		}
+	}
+
+	private void addPlayer(Player p1) throws NotEnoughtCardException {
 		playerList.addPlayer(p1);
 		var hand = new Hand();
 		for (var i = 1; i <= 10; i++) {
