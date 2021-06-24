@@ -21,9 +21,8 @@ public class Main {
 			var p3 = new Player("Bidule");
 			party.addPlayer(p3);
 			party.play();
-
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.atError().setCause(e).log("Il y a un problème");
 		}
 	}
 }
