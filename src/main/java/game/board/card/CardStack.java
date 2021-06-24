@@ -12,7 +12,7 @@ import java.util.List;
 public class CardStack {
 
 	private static final Logger logger = LoggerFactory.getLogger(CardStack.class);
-	private static final int CARDS_NUMBER = 104;
+	public static final int CARDS_NUMBER = 104;
 
 	private final List<Card> cardList = new ArrayList<>(CARDS_NUMBER);
 	private Iterator<Card> iterator;
@@ -24,6 +24,7 @@ public class CardStack {
 			cardList.add(getRandom()% (cardList.size() + 1), createCards(i));
 		}
 		iterator = cardList.iterator();
+		logger.atDebug().log("init ok");
 	}
 
 
@@ -49,17 +50,10 @@ public class CardStack {
 
 	@Override
 	public String toString() {
-		return "game.board.card.CardStack{" +
+		return "CardStack{" +
 				"cardsList=" + cardList +
 				'}';
 	}
-
-	public static void main(String[] args) {
-		var stack = new CardStack();
-		stack.init();
-		logger.atDebug().log(stack.toString());
-	}
-
 
 	public List<Card> getNewCard(int nb) throws NotEnoughtCardException {
 		List<Card> result = new ArrayList<>(nb);
