@@ -36,6 +36,7 @@ public class Table {
 					Thread.currentThread().interrupt();
 				}
 			}
+			p.getHand().remove(c);
 			return selectionLinePhase.getLine().getCards(c);
 		}
 		p.getHand().remove(c);

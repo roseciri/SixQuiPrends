@@ -1,21 +1,13 @@
 package main.one;
 
 import exception.NotEnoughtCardException;
-import game.io.*;
+import game.io.AddPlayerOrPlayAction;
+import game.io.GetPlayerAction;
+import game.io.IOParty;
+import game.io.IOPlayer;
 import game.player.Player;
-import game.rule.Party;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class IOPartyEvent implements IOParty {
-
-	Map<String, IOPlayer> playerCommunicator = new HashMap<>();
-
-	@Override
-	public void createParty()  {
-		new Party(this);
-	}
+public class IOPartyEvent extends IOParty {
 
 	public void needPlayer(GetPlayerAction action) throws NotEnoughtCardException {
 		String name = Main.quiJoue();
@@ -34,8 +26,9 @@ public class IOPartyEvent implements IOParty {
 
 	@Override
 	public IOPlayer addPlayerCommunicator(Player player) {
-		IOPlayer ioPlayer = new IOPlayerEvent(player);
+		IOPlayer ioPlayer = new IOPlayerEvent(player, this);
 		playerCommunicator.put(player.getName(), ioPlayer);
 		return ioPlayer;
 	}
+
 }

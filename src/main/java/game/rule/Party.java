@@ -32,6 +32,13 @@ public class Party {
 		cardStack.init();
 		try {
 			table = new Table(cardStack.getNewCard(4));
+		} catch (NotEnoughtCardException e) {
+			throw new TecnicalException("La pioche ne devrait pas être vide au lancement");
+		}
+	}
+
+	public void launch() {
+		try {
 			communicator.needPlayer(this::addPlayer);
 		} catch (NotEnoughtCardException e) {
 			throw new TecnicalException("La pioche ne devrait pas être vide au lancement");
@@ -91,4 +98,7 @@ public class Party {
 		return cards;
 	}
 
+	public Table getTable() {
+		return table;
+	}
 }

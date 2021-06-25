@@ -4,15 +4,27 @@ import exception.NotEnoughtCardException;
 import game.player.Player;
 import game.rule.Party;
 
-public interface IOParty {
+import java.util.HashMap;
+import java.util.Map;
 
-	 default void createParty() {
-		new Party(this);
+public abstract class IOParty {
+
+	protected Map<String, IOPlayer> playerCommunicator = new HashMap<>();
+	protected Party party;
+
+	public void createParty()  {
+		party = new Party(this);
+		party.launch();
 	}
 
-	void needPlayer(GetPlayerAction action) throws NotEnoughtCardException;
+	public abstract void needPlayer(GetPlayerAction action) throws NotEnoughtCardException;
 
-	void addPlayerOrPlay(AddPlayerOrPlayAction action) throws NotEnoughtCardException;
+	public abstract void addPlayerOrPlay(AddPlayerOrPlayAction action) throws NotEnoughtCardException;
 
-	IOPlayer addPlayerCommunicator(Player name) ;
+	public abstract IOPlayer addPlayerCommunicator(Player name) ;
+
+
+	public String displayTable() {
+		return party.getTable().toString();
+	}
 }
