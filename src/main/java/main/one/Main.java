@@ -52,4 +52,9 @@ public class Main {
 		verrou.unlock();
 		return read;
 	}
+
+	@SuppressWarnings("squid:S106")
+	public static void afficheTable(String displayTable) {
+		new PrintStream(System.out).print(displayTable);
+	}
 }

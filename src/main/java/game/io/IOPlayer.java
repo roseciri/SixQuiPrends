@@ -1,9 +1,19 @@
 package game.io;
 
 
-public interface IOPlayer {
+import game.player.Player;
 
-	 void selectCard(GetCardAction action);
+public abstract class IOPlayer {
 
-	 void selectLine(GetLineAction action);
+	protected final Player player;
+	protected final IOParty ioParty;
+
+	protected IOPlayer(Player player, IOParty ioParty) {
+		this.player = player;
+		this.ioParty = ioParty;
+	}
+
+	public abstract void selectCard(GetCardAction action);
+
+	public abstract void selectLine(GetLineAction action);
 }

@@ -4,10 +4,15 @@ import game.io.Action;
 import game.io.GetCardAction;
 import game.io.GetLineAction;
 import game.io.IOPlayer;
+import game.player.Player;
 
-public class IOPlayerEtat implements IOPlayer {
+public class IOPlayerEtat extends IOPlayer {
 
 	Action action;
+
+	public IOPlayerEtat(Player player, IOPartyEtat ioPartyEvent) {
+		super(player, ioPartyEvent);
+	}
 
 	@Override
 	public void selectCard(GetCardAction action) {
