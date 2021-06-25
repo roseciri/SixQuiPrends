@@ -1,6 +1,7 @@
 package game.io;
 
 import exception.NotEnoughtCardException;
+import game.player.Player;
 import game.rule.Party;
 
 public interface IOParty {
@@ -13,4 +14,5 @@ public interface IOParty {
 
 	void addPlayerOrPlay(AddPlayerOrPlayAction action) throws NotEnoughtCardException;
 
+	IOPlayer addPlayerCommunicator(Player name) ;
 }

@@ -10,6 +10,8 @@ import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
+import static java.lang.Thread.sleep;
+
 public class Table {
 
 	private static final Logger logger = LoggerFactory.getLogger(Table.class);
@@ -17,18 +19,18 @@ public class Table {
 	List<Line> lines = new ArrayList<>(4);
 
 	public Table(List<Card> cards) {
-		cards.stream().forEach(c -> lines.add(new Line(c)));
+		cards.forEach(c -> lines.add(new Line(c)));
 	}
 
 	public Set<Card> addCard(Player p, Card c) {
 		Optional<Line> line = selectLineToAdd(c);
 		var selectionLinePhase = new SelectionLinePhase();
-		if (!line.isPresent()) {
+		if (line.isEmpty()) {
 			Executors.newSingleThreadExecutor().submit(() -> p.selectLine(selectionLinePhase, lines));
 			while (selectionLinePhase.getLine() == null) {
-
 				try {
-					Thread.sleep(10);
+					//noinspection BusyWait
+					sleep(10);
 				} catch (InterruptedException e) {
 					logger.error("Le thread a été interrompu", e);
 					Thread.currentThread().interrupt();
@@ -36,6 +38,7 @@ public class Table {
 			}
 			return selectionLinePhase.getLine().getCards(c);
 		}
+		p.getHand().remove(c);
 		return line.stream()
 				.map(l -> l.addCard(c).orElse(Collections.emptySet()))
 				.flatMap(Collection::stream)
@@ -48,10 +51,10 @@ public class Table {
 
 	@Override
 	public String toString() {
-		var builder = new StringBuilder();
-		builder.append("--------------------------\n");
-		builder.append(lines.stream().map(Line::toString).collect(Collectors.joining("\n")));
-		builder.append("\n--------------------------");
-		return builder.toString();
+		return "\n--------------------------\n" +
+				lines.stream()
+						.map(Line::toString)
+						.collect(Collectors.joining("\n"))
+				+ "\n--------------------------\n";
 	}
 }

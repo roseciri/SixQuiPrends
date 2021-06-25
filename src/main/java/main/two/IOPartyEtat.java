@@ -1,16 +1,19 @@
 package main.two;
 
 import exception.NotEnoughtCardException;
-import game.io.Action;
-import game.io.AddPlayerOrPlayAction;
-import game.io.GetPlayerAction;
-import game.io.IOParty;
+import game.io.*;
+import game.player.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class IOPartyEtat implements IOParty {
 
 	private static final Logger logger = LoggerFactory.getLogger(IOPartyEtat.class);
+
+	Map<String, IOPlayer> playerCommunicator = new HashMap<>();
 
 	Action action;
 
@@ -43,5 +46,12 @@ public class IOPartyEtat implements IOParty {
 		} else {
 			throw new ActionImpossibleException();
 		}
+	}
+
+	@Override
+	public IOPlayer addPlayerCommunicator(Player p) {
+		IOPlayer ioPlayer = new IOPlayerEtat();
+		playerCommunicator.put(p.getName(), ioPlayer);
+		return ioPlayer;
 	}
 }

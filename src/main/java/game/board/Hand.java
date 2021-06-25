@@ -2,8 +2,10 @@ package game.board;
 
 import game.board.card.Card;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Hand {
 	Set<Card> cardSet = new HashSet<>();
@@ -15,13 +17,11 @@ public class Hand {
 	@Override
 	public String toString() {
 		return "game.board.Hand{" +
-				"cardSet=" + cardSet +
+				"cardSet=" + cardSet.stream().sorted(Comparator.comparingInt(Card::getValue)).collect(Collectors.toList()) +
 				'}';
 	}
 
-	public Card getFirstCard() {
-		var card = cardSet.stream().findFirst().orElseThrow();
-		cardSet.remove(card);
-		return card;
+	public void remove(Card c) {
+		cardSet.remove(c);
 	}
 }

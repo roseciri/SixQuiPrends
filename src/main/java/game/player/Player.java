@@ -3,6 +3,8 @@ package game.player;
 import game.board.Hand;
 import game.board.Line;
 import game.board.card.Card;
+import game.io.IOParty;
+import game.io.IOPlayer;
 import game.rule.CollectCardPhase;
 import game.rule.SelectionLinePhase;
 
@@ -12,10 +14,12 @@ import java.util.List;
 public class Player {
 	Hand hand;
 	final String name;
+	final IOPlayer communicator;
 	int points = 0;
 
-	public Player(String name) {
+	public Player(String name, IOParty communicator) {
 		this.name = name;
+		this.communicator = communicator.addPlayerCommunicator(this);
 	}
 
 	public void setHand(Hand hand) {
@@ -29,13 +33,7 @@ public class Player {
 
 
 	public void selectCard(CollectCardPhase collectCardPhase) {
-		var c = selectCard();
-		collectCardPhase.playerPlayCard(this, c);
-	}
-
-
-	private Card selectCard() {
-		return hand.getFirstCard();
+		communicator.selectCard(c -> collectCardPhase.playerPlayCard(this, new Card(c, c)));
 	}
 
 	public void addPoint(Collection<Card> addCard) {
@@ -43,6 +41,14 @@ public class Player {
 	}
 
 	public void selectLine(SelectionLinePhase selectionLinePhase, List<Line> lines) {
-		selectionLinePhase.select(lines.get(0));
+		communicator.selectLine(c -> selectionLinePhase.select(lines.get(0)));
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Hand getHand() {
+		return hand;
 	}
 }

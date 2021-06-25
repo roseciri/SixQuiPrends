@@ -1,12 +1,16 @@
 package main.one;
 
 import exception.NotEnoughtCardException;
-import game.io.AddPlayerOrPlayAction;
-import game.io.GetPlayerAction;
-import game.io.IOParty;
+import game.io.*;
+import game.player.Player;
 import game.rule.Party;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class IOPartyEvent implements IOParty {
+
+	Map<String, IOPlayer> playerCommunicator = new HashMap<>();
 
 	@Override
 	public void createParty()  {
@@ -18,7 +22,7 @@ public class IOPartyEvent implements IOParty {
 		action.addPlayer(name);
 	}
 
-	public  void addPlayerOrPlay(AddPlayerOrPlayAction action) throws NotEnoughtCardException {
+	public void addPlayerOrPlay(AddPlayerOrPlayAction action) throws NotEnoughtCardException {
 		String choice = Main.ajouterUnJoueurOuJouer();
 		if("add".equals(choice)) {
 			String name = Main.quiJoue();
@@ -26,5 +30,12 @@ public class IOPartyEvent implements IOParty {
 		} else if("play".equals(choice)) {
 			action.getPlayAction().play();
 		}
+	}
+
+	@Override
+	public IOPlayer addPlayerCommunicator(Player player) {
+		IOPlayer ioPlayer = new IOPlayerEvent(player);
+		playerCommunicator.put(player.getName(), ioPlayer);
+		return ioPlayer;
 	}
 }

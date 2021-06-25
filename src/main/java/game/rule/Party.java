@@ -39,7 +39,7 @@ public class Party {
 	}
 
 	private void addPlayer(String name) throws NotEnoughtCardException {
-		addPlayer(new Player(name));
+		addPlayer(new Player(name,communicator));
 		if (playerList.getPlayersNumber() < 2) {
 			communicator.needPlayer(this::addPlayer);
 		} else {
